@@ -348,6 +348,79 @@
         }
         $this->set_response($result,REST_Controller::HTTP_OK);
     }
+
+    public function updateLocation_post(){ /* api for updating the location of the user */
+        $data = array(
+            'location_name'=>$this->input->post('location_name'),
+            'latitude'=>$this->input->post('latitude'),
+            'longitude'=>$this->input->post('longitude')
+        );
+        $user_id = $this->input->post('user_id');
+        $getUser = $this->User_model->select_data('*','ms_users','id = '.$user_id.'');
+        if(!empty($getUser)){
+        $this->db->where('id',$user_id);
+        $this->db->update('ms_users',$data);
+        $result = array(
+            "controller" => "User",
+            "action" => "updateLocation",
+            "ResponseCode" => true,
+            "MessageWhatHappen" =>"User location updated Successfully."
+            );
+        }else{
+             $result = array(
+            "controller" => "User",
+            "action" => "updateLocation",
+            "ResponseCode" => false,
+            "MessageWhatHappen" =>"User not found."
+            );
+        }
+   
+        $this->set_response($result,REST_Controller::HTTP_OK);
+
+    } 
+
+
+      public function getCategories_get(){
+       //$resArray = array();
+       $getCat = $this->db->select('*')
+                           ->from('ms_categories')
+                           ->get()->result();
+           foreach ($getCat as $key => $value) {
+              $value->icon = base_url().'public/assets/images/'.$value->icon;
+              $getSubCats = $this->db->select('id,sub_category_name,icon')
+                                      ->from('ms_sub_categories')
+                                      ->where('category_id',$value->id)
+                                      ->get()->result();
+                                      // print_r($this->db->last_query()); die;
+                                      foreach ($getSubCats as  $conc) {
+                                        $conc->icon = base_url().'public/assets/images/'.$conc->icon;
+                                      }
+               $value->subCat_data = $getSubCats;
+             
+           }
+           if(empty($getCat)) {
+            $result = array(
+            "controller" => "User",
+            "action" => "getCategories",
+            "ResponseCode" => false,
+            "MessageWhatHappen" =>"No categories found",
+            "getCategoriesResponse" => ""
+            );
+        }
+        else{
+            $result = array(
+            "controller" => "User",
+            "action" => "getCategories",
+            "ResponseCode" => true,
+            "MessageWhatHappen" =>"Categories Data",
+            "getCategoriesResponse" => $getCat
+            );
+        }
+        $this->set_response($result,REST_Controller::HTTP_OK);
+
+      }
+
+    
     public function editprofile_post(){
         $arra = array(
         'name'=>$this->input->post('name'),

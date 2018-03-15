@@ -1,5 +1,5 @@
 <?php 
-// echo "<pre>"; print_r($data['msg']); die;  ?>
+// echo "<pre>"; print_r($categories); die;  ?>
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -25,13 +25,26 @@
         <form method="POST" action="add-sub-category" enctype= multipart/form-data>
           <span id="errmsg" style="color:red;"></span>
           <div class="form-group">
+
+            <label for="category">Category Name</label>
+            <select id="category"  name="category" required>
+            <option>Select a Category</option>
+            <?php
+              foreach ($categories as $key => $value) {  ?>
+              <option value="<?php echo $value->id; ?>"><?php echo $value->category_name; ?></option>
+            <?php  }
+             ?>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label for="category">Sub Category Name</label>
             <input type="text" class="form-control" id="sub-category"  name="sub-category" placeholder="Enter Sub-Category Name" required />
           </div>
 
           <div class="form-group">
             <label for="icon">Icon</label>
-            <input type="file" class="form-control-file" id="icon" name="icon" />
+            <input type="file" class="form-control-file" id="icon" name="icon" required/>
           </div>
 
           <input type="submit" class="btn btn-primary" name="submit" value="SUBMIT" />

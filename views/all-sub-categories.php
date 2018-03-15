@@ -1,5 +1,5 @@
 <?php
-// echo "<pre>"; print_r($AllCategories); die;
+// echo "<pre>"; print_r($AllSubCategories); die;
 ?>
 <div class="content-wrapper">
   <section class="content-header">
@@ -24,6 +24,7 @@
                   <tr>
                     <th>S.No</th>
                     <th>Icon</th>
+                    <th>Category Name</th>
                     <th>Sub Category Name</th>
                     <th>Action</th>
                   </tr>
@@ -37,12 +38,13 @@
                   <tr>
                     <td><?php echo $counter; ?></td>
                     <td><?php echo "<img class='round_cls'  width='90' src='".$base_url.$img_path.$value->icon."' / >";?></td>
+                    <td><?php echo $value->category_name; ?></td>
                     <td><?php echo $value->sub_category_name; ?></td>
                     <td><a  data-toggle="modal" data-target="#myModal" class="btn btn-block btn-primary"
                       data-id="<?php echo $value->id;?>"
                       data-name="<?php echo $value->sub_category_name;?>"
                       data-icon="<?php echo $value->icon;?>">Edit</a></td>
-                      <td><a href="Dashboard/delete_category/<?php echo $value->id; ?>" class="btn btn-block btn-primary">Delete</a></td>  
+                      <td><a href="<?php base_url();?>delete_sub_category/<?php echo $value->id; ?>" onclick="return confirm('Are you sure?')" class="btn btn-block btn-primary">Delete</a></td>  
                     </tr>
                     <?php $counter++;
                   } ?>

@@ -25,7 +25,7 @@
 
           <div class="form-group">
             <label for="icon">Icon</label>
-            <input type="file" class="form-control-file" id="icon" name="icon" />
+            <input type="file" class="form-control-file" id="icon" name="icon" required/>
           </div>
 
           <input type="submit" class="btn btn-primary" name="submit" value="SUBMIT" />

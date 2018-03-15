@@ -65,7 +65,7 @@
 						}
 						$loginParams['user_id']=$checkemailpass[0]->id;
 						$login=$this->User_model->insert_data('ms_login',$loginParams);
-						return $signupdata=$this->db->query("SELECT id,name,email,country_code,phone,profile_pic,is_verified from ms_users where id='".$loginParams['user_id']."'")->row();
+						return $signupdata=$this->db->query("SELECT id,name,email,country_code,phone,profile_pic,is_verified,location_name,latitude,longitude from ms_users where id='".$loginParams['user_id']."'")->row();
 					}
 					else{
 						return 7;
@@ -113,8 +113,8 @@
 			}
 		}
 		// print_r($type1);die;
-		$radius = 500;
-		$result="SELECT *,ROUND(6371 * acos(cos(radians('".$data['lat']."')) * cos(radians(lat)) * cos(radians(lng) - radians('".$data['long']."')) + sin(radians('".$data['lat']."')) * sin(radians(lat)))) as distance from ms_post WHERE  status=1 ";
+		$radius = 50;
+		$result="SELECT *,ROUND(6371 * acos(cos(radians('".$data['lat']."')) * cos(radians(lat)) * cos(radians(lng) - radians('".$data['long']."')) + sin(radians('".$data['lat']."')) * sin(radians(lat)))) as distance from ms_post WHERE  status = 1 ";
 		if (!empty($user_id)) {
 			$result .=' and user_id !='.$user_id."";
 		}
@@ -142,7 +142,7 @@
 		if(!empty($data['cat_id'])){
 			$result .=' and cat_id IN ('.$data['cat_id'].")";
 		}
-		$result .=" ORDER BY date_created desc";
+		$result .=" ORDER BY distance ";
 		$selectposts = $this->db->query($result)->result();
 		// print_r($this->db->last_query());die;
 		$postdata=array();

@@ -42,7 +42,7 @@
                       data-id="<?php echo $value->id;?>"
                       data-name="<?php echo $value->category_name;?>"
                       data-icon="<?php echo $value->icon;?>">Edit</a></td>
-                      <td><a href="Dashboard/delete_category/<?php echo $value->id; ?>" class="btn btn-block btn-primary">Delete</a></td>  
+                      <td><a href="<?php base_url();?>delete_category/<?php echo $value->id; ?>" onclick="return confirm('Are you sure?')" class="btn btn-block btn-primary">Delete</a></td>  
                     </tr>
                     <?php $counter++;
                   } ?>
@@ -84,7 +84,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="UpdateName">Category Name</label>
-                  <input type="text" class="form-control" name="update_category" id="update_category" />
+                  <input type="text" class="form-control" name="update_category" id="update_category" required/>
                 </div>
 
                 <div class="form-group">

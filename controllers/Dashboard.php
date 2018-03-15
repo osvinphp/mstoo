@@ -224,7 +224,7 @@ class Dashboard extends CI_Controller {
 
 	/******Function to add Sub category ********/
 	public function AddSubCategory(){
-		$data['rest']='data';
+		$data['categories']=$this->Common_model->select('*','ms_categories');
 
 		if(isset($_FILES['icon']['name']))
 		{
@@ -240,6 +240,7 @@ class Dashboard extends CI_Controller {
 
 			$icon_name=$_FILES['icon']['name'];
 			$data=array(
+				'category_id'=>$this->input->post('category'),
 				'sub_category_name'=>$this->input->post('sub-category'),
 				'icon'=>$icon_name
 				);
@@ -266,7 +267,9 @@ class Dashboard extends CI_Controller {
 
 	/********** Function to get all Sub-categories ******************/
 	public function GetAllSubCategories(){
-		$data['AllSubCategories']=$this->Common_model->select('*','ms_sub_categories');
+		$data['AllSubCategories']=$this->Common_model->GetAllCategory();
+
+		// echo "<pre>"; print_r($data['AllSubCategories']); die;
 		$this->template('all-sub-categories.php',$data);
 		
 	}

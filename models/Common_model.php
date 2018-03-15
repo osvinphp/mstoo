@@ -43,9 +43,9 @@ class Common_model extends CI_Model {
 
 	public function ReportedPosts(){
 		$getData = $this->db->select('*')
-						->from('ms_post_spam')
-						->join('ms_post', 'ms_post.id = ms_post_spam.post_id')
-						->get()->result_object();
+		->from('ms_post_spam')
+		->join('ms_post', 'ms_post.id = ms_post_spam.post_id')
+		->get()->result_object();
 		return $getData;
 
 	}
@@ -60,7 +60,7 @@ class Common_model extends CI_Model {
 			$this->db->from("ms_post_spam");
 			$this->db->where("ms_post_spam.post_id", $PostID);
 			$this->db->delete("ms_post_spam");
-		
+
 			$this->db->from("ms_chat");
 			$this->db->where("ms_chat.post_id", $PostID);
 			$this->db->delete("ms_chat");
@@ -109,6 +109,15 @@ class Common_model extends CI_Model {
 		->get()->num_rows();
 
 		return $result;
+
+	}
+
+	public function GetAllCategory(){
+		$result = $this->db->select('ms_sub_categories.*,ms_categories.*')
+				->from('ms_sub_categories')
+				->join('ms_categories', 'ms_categories.id = ms_sub_categories.category_id')
+				->get()->result();
+				return $result;
 
 	}
 
